@@ -15,6 +15,37 @@ Person::Person()
 	
 }
 
+Person::Person(string _fullName)
+{
+	fullName = _fullName;
+	cout << "Does " << _fullName << " have any siblings?"; 
+	bool doneWithChildren = false;
+	while (!doneWithChildren)
+	{
+		cout << "If not enter \"No\", otherwise enter their full name, \"First Last\": ";
+		//cin.ignore();
+		string userInput;
+		getline(cin, userInput);
+		//cout << "answer was " << userInput << endl;
+		if (userInput == "No")
+		{
+			doneWithChildren = true;
+			//cout << "SAID NO" << endl;
+		}
+		else
+		{
+			cout << userInput << " is a sibling? Enter \"Yes \" or \"No\": ";
+			string confirm;
+			getline(cin, confirm);
+			if (confirm == "Yes")
+				addSibToStringList(userInput);
+			else
+				cout << userInput << " has not been added as a sibling" << endl;
+			cout << "Does " << _fullName << " have any more siblings?";
+		}
+	}
+}
+
 Person::~Person()
 {
 	
@@ -32,12 +63,22 @@ void Person::setBiologicalMother(Person *_inputPerson)
 
 void Person::addSibling(Person *_inputPerson)
 {
-	siblings.push_back(_inputPerson);
+	sibList.push_back(_inputPerson);
 }
 
 void Person::addChild(Person *_inputPerson)
 {
-	children.push_back(_inputPerson);
+	childList.push_back(_inputPerson);
+}
+
+void Person::addSibToStringList(string _name)
+{
+	sibStrings.push_back(_name);
+}
+
+void Person::addChildToStringList(string _name)
+{
+	childStrings.push_back(_name);
 }
 
 Person *Person::getBiologicalFather()
