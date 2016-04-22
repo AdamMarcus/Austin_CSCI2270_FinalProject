@@ -1,7 +1,7 @@
 /*
-Adam Austin
-4/22/2016
-TA: Quesada
+	Adam Austin
+	4/22/2016
+	TA: Quesada
 */
 
 #include "Person.h"
