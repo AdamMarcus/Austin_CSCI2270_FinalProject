@@ -27,19 +27,17 @@ class Person
 		void setBiologicalMother(Person*);
 		void addSibling(Person*);
 		void addChild(Person*);
-		void addSibToStringList(std::string);
-		void addChildToStringList(std::string);
 		void setVisited();
+		void setFamily(FamilyTree*);
 		bool getVisited();
 		Person *getBiologicalFather();
 		Person *getBiologicalMother();
 		std::string getFullName();
+		FamilyTree *getFamily();
     private:
 		bool visited = false;
 		std::string fullName;
 		FamilyTree *family;
-		std::vector<std::string> sibStrings;
-		std::vector<std::string> childStrings;
 		Person *biologicalFather = NULL;
 		Person *biologicalMother = NULL;
 };

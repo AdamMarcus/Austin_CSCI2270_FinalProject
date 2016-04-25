@@ -57,16 +57,55 @@ Person* FamilyTree::findPerson(string _name)
 
 void FamilyTree::addToTree(Person* _person)
 {
-	/*if (_person -> getBiologicalMother() != NULL)
+	if (_person -> getBiologicalMother() -> getFullName()  != "Unknown")
 	{
-		Person *mother = findPerson(_person -> getBiologicalMother() -> name);
-		bool found = false;
-		for (int i = 0; !found && i < mother -> child
-		
-		mother -> childList.pushBack
+		Person *mother = findPerson(_person -> getBiologicalMother() -> getFullName());
+		if (mother != NULL)
+		{
+			for (int i = 0; i < mother -> childList.size(); i++)
+			{
+				if (mother -> childList[i] -> getFullName() == _person -> getFullName())
+					mother -> childList.erase(mother -> childList.begin() + i - 1);
+			}
+			mother -> childList.push_back(_person);
+			_person -> setBiologicalMother(mother);
+			_person -> setFamily(mother -> getFamily());
+		}
 	}
-	else if (_person -> getBiologicalFather() != NULL)
+	else if (_person -> getBiologicalFather() -> getFullName()  != "Unknown")
 	{
-		Person *father = findPerson(_person -> getBiologicalFather());
-	}*/
+		Person *father = findPerson(_person -> getBiologicalFather() -> getFullName());
+		if (father != NULL)
+		{
+			for (int i = 0; i < father -> childList.size(); i++)
+			{
+				if (father -> childList[i] -> getFullName() == _person -> getFullName())
+					father -> childList.erase(father -> childList.begin() + i - 1);
+			}
+			father -> childList.push_back(_person);
+			_person -> setBiologicalFather(father);
+		}
+	}
+	else
+	{
+		rootList.push_back(_person);
+	}
+	
+	for (int i = 0; i < _person -> sibList.size(); i++)
+	{
+		if (findPerson(_person -> sibList[i] -> getFullName()) != NULL)
+		{
+			_person -> sibList.push_back(findPerson(_person -> sibList[i] -> getFullName()));
+			_person -> sibList.erase(_person -> sibList.begin() + i - 1);
+		}
+	}
+	
+	for (int i = 0; i < _person -> childList.size(); i++)
+	{
+		if (findPerson(_person -> childList[i] -> getFullName()) != NULL)
+		{
+			_person -> childList.push_back(findPerson(_person -> childList[i] -> getFullName()));
+			_person -> childList.erase(_person -> childList.begin() + i - 1);
+		}
+	}
 }

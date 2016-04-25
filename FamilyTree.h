@@ -15,7 +15,7 @@ class Person;
 
 class FamilyTree
 {
-    public:
+    public:    
 		FamilyTree();
 		~FamilyTree();
 		Person* findPerson(std::string);

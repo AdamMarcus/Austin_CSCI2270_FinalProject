@@ -46,7 +46,7 @@ Person::Person(string _fullName, string _mothersName, string _fathersName, Famil
 			string confirm;
 			getline(cin, confirm);
 			if (confirm == "Yes")
-				addSibToStringList(userInput);
+				addSibling(new Person(userInput, _family));
 			else
 				cout << userInput << " has not been added as a sibling" << endl;
 			cout << "Does " << _fullName << " have any more siblings?";
@@ -79,14 +79,9 @@ void Person::addChild(Person *_inputPerson)
 	childList.push_back(_inputPerson);
 }
 
-void Person::addSibToStringList(string _name)
+void Person::setFamily(FamilyTree *_family)
 {
-	sibStrings.push_back(_name);
-}
-
-void Person::addChildToStringList(string _name)
-{
-	childStrings.push_back(_name);
+	family = _family;
 }
 
 Person *Person::getBiologicalFather()
@@ -107,4 +102,9 @@ string Person::getFullName()
 bool Person::getVisited()
 {
 	return visited;
+}
+
+FamilyTree *Person::getFamily()
+{
+	return family;
 }
