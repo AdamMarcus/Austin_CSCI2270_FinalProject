@@ -4,12 +4,14 @@
 	TA: Quesada
 */
 
-#ifndef FAMILYTREE_H
-#define FAMILYTREE_H
+#ifndef _FAMILYTREE_H
+#define _FAMILYTREE_H
 
 #include "Person.h"
 #include <iostream>
 #include <vector>
+
+class Person;
 
 class FamilyTree
 {
@@ -17,8 +19,8 @@ class FamilyTree
 		FamilyTree();
 		~FamilyTree();
     private:
-		Person *root;
-		std::vector<Person *> familyList;
+		std::vector<Person*> rootList;
+		Person* findPerson(std::string);
 };
 
 #endif

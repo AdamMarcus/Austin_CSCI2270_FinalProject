@@ -4,11 +4,14 @@
 	TA: Quesada
 */
 
-#ifndef PERSON_H
-#define PERSON_H
+#ifndef _PERSON_H
+#define _PERSON_H
 
+#include "FamilyTree.h"
 #include <iostream>
 #include <vector>
+
+class FamilyTree;
 
 class Person
 {
@@ -16,18 +19,19 @@ class Person
 		Person();
 		Person(std::string);
 		~Person();
-		void setBiologicalFather(Person *);
-		void setBiologicalMother(Person *);
-		void addSibling(Person *);
-		void addChild(Person *);
+		void setBiologicalFather(Person*);
+		void setBiologicalMother(Person*);
+		void addSibling(Person*);
+		void addChild(Person*);
 		void addSibToStringList(std::string);
 		void addChildToStringList(std::string);
 		Person *getBiologicalFather();
 		Person *getBiologicalMother();
     private:
 		std::string fullName;
-		std::vector<Person *> sibList;
-		std::vector<Person *> childList;
+		FamilyTree *family;
+		std::vector<Person*> sibList;
+		std::vector<Person*> childList;
 		std::vector<std::string> sibStrings;
 		std::vector<std::string> childStrings;
 		Person *biologicalFather = NULL;

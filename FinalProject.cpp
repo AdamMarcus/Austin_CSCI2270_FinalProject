@@ -5,6 +5,7 @@
 */
 
 #include "Person.h"
+#include "FamilyTree.h"
 #include <iostream>
 #include <string>
 
@@ -34,11 +35,11 @@ int main()
 		}
 		else if (userChoiceString == "2")
 		{
-			/*cin.ignore();
-			cout << "Enter title:" << endl;
-			string title;
-			getline(cin, title);
-			myTable.deleteMovie(title);*/
+			cout << "What is the persons full name(\"First Last)\"?:" << endl;
+			cin.ignore();
+			string name;
+			getline(cin, name);
+			Person *newPerson = new Person(name);
 		}
 		else if (userChoiceString == "5")
 		{
