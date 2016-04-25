@@ -37,20 +37,20 @@ Person* FamilyTree::findPerson(string _name)
 	{
 		Person *currentPerson = personQueue.front();
 		personQueue.pop();
-		if (currentPerson -> getFullName() == _name)
+		if (currentPerson -> getVisited() == false)
 		{
-			personToReturn = currentPerson;
-			found = true;
-		}
-		else if (currentPerson -> getVisited() == false)
-		{
+			if (currentPerson -> getFullName() == _name)
+			{
+				personToReturn = currentPerson;
+				found = true;
+			}
 			personQueue.push(currentPerson -> getBiologicalFather());
 			personQueue.push(currentPerson -> getBiologicalMother());
 			for (int i = 0; i < currentPerson -> sibList.size(); i++)
 				personQueue.push(currentPerson -> sibList[i]);
 			for (int i = 0; i < currentPerson -> childList.size(); i++)
 				personQueue.push(currentPerson -> childList[i]);
-		}
+			}
 	}
 	return personToReturn;
 }
