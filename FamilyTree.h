@@ -18,9 +18,10 @@ class FamilyTree
     public:
 		FamilyTree();
 		~FamilyTree();
+		Person* findPerson(std::string);
+		void addToTree(Person*);
     private:
 		std::vector<Person*> rootList;
-		Person* findPerson(std::string);
 };
 
 #endif

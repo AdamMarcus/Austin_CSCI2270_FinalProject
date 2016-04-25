@@ -16,8 +16,12 @@ class FamilyTree;
 class Person
 {
     public:
+		std::vector<Person*> sibList;
+		std::vector<Person*> childList;
+		
 		Person();
-		Person(std::string);
+		Person(std::string, FamilyTree*);
+		Person(std::string, std::string, std::string, FamilyTree*);
 		~Person();
 		void setBiologicalFather(Person*);
 		void setBiologicalMother(Person*);
@@ -25,13 +29,15 @@ class Person
 		void addChild(Person*);
 		void addSibToStringList(std::string);
 		void addChildToStringList(std::string);
+		void setVisited();
+		bool getVisited();
 		Person *getBiologicalFather();
 		Person *getBiologicalMother();
+		std::string getFullName();
     private:
+		bool visited = false;
 		std::string fullName;
 		FamilyTree *family;
-		std::vector<Person*> sibList;
-		std::vector<Person*> childList;
 		std::vector<std::string> sibStrings;
 		std::vector<std::string> childStrings;
 		Person *biologicalFather = NULL;

@@ -14,6 +14,7 @@ using namespace std;
 
 int main()
 {
+	FamilyTree *myFamilyTree = new FamilyTree();
 	bool done = false;
 	while (!done)		//write menu
 	{
@@ -31,7 +32,13 @@ int main()
 			cin.ignore();
 			string name;
 			getline(cin, name);
-			Person *newPerson = new Person(name);
+			cout << "What is your biological mothers full name, \"First Last\"? If you do not know put \"Unknown\"" << endl;
+			string mothersName;
+			getline(cin, mothersName);
+			cout << "What is your biological fathers full name, \"First Last\"? If you do not know put \"Unknown\"" << endl;
+			string fathersName;
+			getline(cin, fathersName);
+			Person *newPerson = new Person(name, mothersName, fathersName, myFamilyTree);
 		}
 		else if (userChoiceString == "2")
 		{
@@ -39,7 +46,7 @@ int main()
 			cin.ignore();
 			string name;
 			getline(cin, name);
-			Person *newPerson = new Person(name);
+			//Person *newPerson = new Person(name);
 		}
 		else if (userChoiceString == "5")
 		{

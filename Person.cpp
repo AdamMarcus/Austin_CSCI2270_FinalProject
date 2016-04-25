@@ -15,9 +15,17 @@ Person::Person()
 	
 }
 
-Person::Person(string _fullName)
+Person::Person(string _name, FamilyTree *_family)
+{
+	fullName = _name;
+	family = _family;
+}
+
+Person::Person(string _fullName, string _mothersName, string _fathersName, FamilyTree *_family)
 {
 	fullName = _fullName;
+	biologicalMother = new Person(_mothersName, _family);
+	biologicalFather = new Person(_fathersName, _family);
 	cout << "Does " << _fullName << " have any siblings?"; 
 	bool doneWithChildren = false;
 	while (!doneWithChildren)
@@ -89,4 +97,14 @@ Person *Person::getBiologicalFather()
 Person *Person::getBiologicalMother()
 {
 	return biologicalMother;
+}
+
+string Person::getFullName()
+{
+	return fullName;
+}
+
+bool Person::getVisited()
+{
+	return visited;
 }
