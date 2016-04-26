@@ -26,32 +26,6 @@ Person::Person(string _fullName, string _mothersName, string _fathersName, Famil
 	fullName = _fullName;
 	biologicalMother = new Person(_mothersName, _family);
 	biologicalFather = new Person(_fathersName, _family);
-	cout << "Does " << _fullName << " have any siblings?"; 
-	bool doneWithChildren = false;
-	while (!doneWithChildren)
-	{
-		cout << "If not enter \"No\", otherwise enter their full name, \"First Last\": ";
-		//cin.ignore();
-		string userInput;
-		getline(cin, userInput);
-		//cout << "answer was " << userInput << endl;
-		if (userInput == "No")
-		{
-			doneWithChildren = true;
-			//cout << "SAID NO" << endl;
-		}
-		else
-		{
-			cout << userInput << " is a sibling? Enter \"Yes \" or \"No\": ";
-			string confirm;
-			getline(cin, confirm);
-			if (confirm == "Yes")
-				addSibling(new Person(userInput, _family));
-			else
-				cout << userInput << " has not been added as a sibling" << endl;
-			cout << "Does " << _fullName << " have any more siblings?";
-		}
-	}
 }
 
 Person::~Person()
@@ -82,6 +56,11 @@ void Person::addChild(Person *_inputPerson)
 void Person::setFamily(FamilyTree *_family)
 {
 	family = _family;
+}
+
+void Person::setVisited(bool _visited)
+{
+	visited = _visited;
 }
 
 Person *Person::getBiologicalFather()

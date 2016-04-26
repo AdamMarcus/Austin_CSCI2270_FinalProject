@@ -24,6 +24,7 @@ FamilyTree::~FamilyTree()
 
 Person* FamilyTree::findPerson(string _name)
 {
+	cout << "In findPerson" << endl;
 	Person *personToReturn = NULL;
 	queue<Person*> personQueue;
 	bool found = false;
@@ -31,6 +32,7 @@ Person* FamilyTree::findPerson(string _name)
 		found = true;
 	for (int i = 0; i < rootList.size(); i++)
 	{
+		cout << "Pushing " << rootList[i] -> getFullName() << " to queue. (rootList)" << endl;
 		personQueue.push(rootList[i]);
 	}
 	while (!found && !personQueue.empty())
@@ -41,22 +43,36 @@ Person* FamilyTree::findPerson(string _name)
 		{
 			if (currentPerson -> getFullName() == _name)
 			{
+				cout << currentPerson -> getFullName() << " has been found." << endl;
 				personToReturn = currentPerson;
 				found = true;
 			}
 			personQueue.push(currentPerson -> getBiologicalFather());
 			personQueue.push(currentPerson -> getBiologicalMother());
 			for (int i = 0; i < currentPerson -> sibList.size(); i++)
+			{
+				cout << "Pushing " << currentPerson -> sibList[i] -> getFullName() << " to queue." << endl;
 				personQueue.push(currentPerson -> sibList[i]);
+			}
 			for (int i = 0; i < currentPerson -> childList.size(); i++)
+			{
+				cout << "Pushing " << currentPerson -> childList[i] -> getFullName() << " to queue." << endl;
 				personQueue.push(currentPerson -> childList[i]);
 			}
+			currentPerson -> setVisited(true);
+		}
 	}
+	if (personToReturn == NULL)
+		cout << "This person not found" << endl;
+	else
+		cout << "Leaving findPerson, " << personToReturn -> getFullName() << " found."<< endl;
 	return personToReturn;
 }
 
 void FamilyTree::addToTree(Person* _person)
 {
+	personList.push_back(_person);
+	bool addAsRoot = true;
 	if (_person -> getBiologicalMother() -> getFullName()  != "Unknown")
 	{
 		Person *mother = findPerson(_person -> getBiologicalMother() -> getFullName());
@@ -69,10 +85,10 @@ void FamilyTree::addToTree(Person* _person)
 			}
 			mother -> childList.push_back(_person);
 			_person -> setBiologicalMother(mother);
-			_person -> setFamily(mother -> getFamily());
+			addAsRoot = false;
 		}
 	}
-	else if (_person -> getBiologicalFather() -> getFullName()  != "Unknown")
+	if (_person -> getBiologicalFather() -> getFullName()  != "Unknown")
 	{
 		Person *father = findPerson(_person -> getBiologicalFather() -> getFullName());
 		if (father != NULL)
@@ -84,10 +100,12 @@ void FamilyTree::addToTree(Person* _person)
 			}
 			father -> childList.push_back(_person);
 			_person -> setBiologicalFather(father);
+			addAsRoot = false;
 		}
 	}
-	else
+	if (addAsRoot)
 	{
+		cout << "adding " << _person -> getFullName() << " as a root" << endl;
 		rootList.push_back(_person);
 	}
 	
@@ -108,4 +126,10 @@ void FamilyTree::addToTree(Person* _person)
 			_person -> childList.erase(_person -> childList.begin() + i - 1);
 		}
 	}
+}
+
+void FamilyTree::resetVisited()
+{
+	for (int i = 0; i < personList.size(); i++)
+		personList[i] -> setVisited(false);
 }

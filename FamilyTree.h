@@ -20,8 +20,10 @@ class FamilyTree
 		~FamilyTree();
 		Person* findPerson(std::string);
 		void addToTree(Person*);
+		void resetVisited();
     private:
 		std::vector<Person*> rootList;
+		std::vector<Person*> personList;
 };
 
 #endif
