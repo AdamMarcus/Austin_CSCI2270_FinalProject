@@ -15,11 +15,11 @@ using namespace std;
 int main()
 {
 	FamilyTree *myFamilyTree = new FamilyTree();						// Create an instance of familyTree
-	Person *unknownPerson = new Person("Unknown");
+	Person *unknownPerson = new Person("Unknown");						// Make an unknown node for the tree whose visited will always be true. This will help with people with unknown relatives
 	unknownPerson -> setVisited(true);
-	myFamilyTree -> setUnknownPerson(unknownPerson);
+	myFamilyTree -> setUnknownPerson(unknownPerson);					// Set the unknown person to myFamilyTree
 	bool done = false;
-	while (!done)		//write menu
+	while (!done)										//write menu
 	{
 		cout << "======Main Menu======" << endl;
 		cout << "1. Add a Person" << endl;
@@ -32,8 +32,9 @@ int main()
 		cin >> userChoiceString;
 		
 		// Check user input
-		if (userChoiceString == "1")
+		if (userChoiceString == "1")	// Add person
 		{
+			// Get all of the user input to make a new person
 			cout << "What is the persons full name(\"First Last)\"?:" << endl;
 			cin.ignore();
 			string name;
@@ -61,29 +62,26 @@ int main()
 				else
 					cout << "This is not a recognized input, please try again:";
 			}
-			Person *newPerson = new Person(name, mothersName, fathersName, spouse, gender);
+			Person *newPerson = new Person(name, mothersName, fathersName, spouse, gender);	// Make a new instance of person with the user input
 			cout << "Does " << newPerson -> getFullName() << " have any siblings? "; 
 			bool doneWithSiblings = false;
-			while (!doneWithSiblings)
+			while (!doneWithSiblings)			// Get user input for all siblings
 			{
 				cout << "If not enter \"No\", otherwise enter their full name, \"First Last\": ";
-				//cin.ignore();
 				string userInput;
 				getline(cin, userInput);
-				//cout << "answer was " << userInput << endl;
-				if (userInput == "No")
+				if (userInput == "No" || userInput == "no")				// Check if the person is done with siblings yet
 				{
 					doneWithSiblings = true;
-					//cout << "SAID NO" << endl;
 				}
 				else
 				{
 					cout << userInput << " is a sibling? Enter \"Yes \" or \"No\": ";
 					string confirm;
 					getline(cin, confirm);
-					if (confirm == "Yes")
+					if (confirm == "Yes" || userInput == "yes")			// If the current input is a sibling
 					{
-						cout << userInput << " has been added! " << endl;
+						cout << userInput << " has been added! " << endl;		// Add that sibling to the new persons sibList
 						Person *newSib = new Person(userInput, myFamilyTree);
 						newSib -> addSibling(newPerson);
 						newPerson -> addSibling(newSib);
@@ -98,25 +96,21 @@ int main()
 			while (!doneWithChildren)
 			{
 				cout << "If not enter \"No\", otherwise enter their full name, \"First Last\": ";
-				//cin.ignore();
 				string userInput;
 				getline(cin, userInput);
-				//cout << "answer was " << userInput << endl;
-				if (userInput == "No")
+				if (userInput == "No" || userInput == "no")				// Check if the person is done with children yet
 				{
 					doneWithChildren = true;
-					//cout << "SAID NO" << endl;
 				}
 				else
 				{
 					cout << userInput << " is a child? Enter \"Yes \" or \"No\": ";
 					string confirm;
 					getline(cin, confirm);
-					if (confirm == "Yes")
+					if (confirm == "Yes" || userInput == "yes")				// If the current input is a child
 					{
-						cout << userInput << " has been added!" << endl;
+						cout << userInput << " has been added!" << endl;		// Add the child to the new persons childList
 						Person *newChild = new Person(userInput, myFamilyTree);
-						//newChild -> setBi(newPerson);
 						newPerson -> addChild(newChild);
 					}
 					else
@@ -124,43 +118,41 @@ int main()
 					cout << "Does " << newPerson -> getFullName() << " have any more children?";
 				}
 			}
-			myFamilyTree -> addToTree(newPerson);
+			myFamilyTree -> addToTree(newPerson);						// Add the new person to the tree
 		}
-		else if (userChoiceString == "2")
+		else if (userChoiceString == "2")	// Print Person information
 		{
 			cout << "What is the persons full name(\"First Last)\"?:" << endl;
 			cin.ignore();
-			string name;
-			getline(cin, name);
-			//myFamilyTree -> resetVisited();
-			Person *person = myFamilyTree -> findPerson(name);
+			string name;				// Get user input
+			getline(cin, name);		
+			Person *person = myFamilyTree -> findPerson(name); 	
 			if (person != NULL)
 			{
-				person -> printInformation();
+				person -> printInformation();	// Print persons information
 			}
 		}
-		else if (userChoiceString == "3")
+		else if (userChoiceString == "3")	// Print persons family
 		{
 			cout << "What is the persons full name(\"First Last)\"?:" << endl;
 			cin.ignore();
-			string name;
+			string name;		// Get user input
 			getline(cin, name);
-			//myFamilyTree -> resetVisited();
 			Person *person = myFamilyTree -> findPerson(name);
 			if (person != NULL)
 			{
-				myFamilyTree -> printPersonsFamily(person);
+				myFamilyTree -> printPersonsFamily(person);		// Print persons family
 			}
 		}
-		else if (userChoiceString == "5")
+		else if (userChoiceString == "4")	// Print all families
 		{
 			myFamilyTree -> printAllFamilies();
 		}
-		else if (userChoiceString == "4")
+		else if (userChoiceString == "5")	// Print all family roots
 		{
 			myFamilyTree -> printAllRoots();
 		}
-		else if (userChoiceString == "5")
+		else if (userChoiceString == "6")	// Quit
 		{
 			cout << "Goodbye!" << endl; 
 			done = true;
