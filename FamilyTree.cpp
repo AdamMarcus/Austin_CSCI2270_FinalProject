@@ -24,12 +24,12 @@ FamilyTree::~FamilyTree()
 
 Person* FamilyTree::findPerson(string _name)
 {
-	cout << "In findPerson searching for " << _name << endl;
-	resetVisited();
-	Person *personToReturn = NULL;
-	queue<Person*> personQueue;
-	bool found = false;
-	if (rootList.size() <= 0)
+	/*//cout << "In findPerson searching for " << _name << endl;
+	resetVisited();					// Reset all the visited fields
+	Person *personToReturn = NULL;	// Make a person to hold the person to return when found
+	queue<Person*> personQueue;		// Make a queue to hold person nodes during searching
+	bool found = false;				// Boolean to indicate if person has been found
+	if (rootList.size() <= 0)		// Queue every
 		found = true;
 	for (int i = 0; i < rootList.size(); i++)
 	{
@@ -77,7 +77,22 @@ Person* FamilyTree::findPerson(string _name)
 		cout << "This person not found" << endl;
 	else
 		cout << "Leaving findPerson, " << personToReturn -> getFullName() << " found."<< endl;
+	return personToReturn;*/
+	
+	Person *personToReturn = NULL;					// Make a person to hold the person to return when found
+	bool found = false;								// Boolean to indicate if person has been found
+	for (int i = 0; i < personList.size(); i++)		// For each person in the tree
+	{
+		if (personList[i] -> getFullName() == _name)// If the persons name matches the name looking for
+		{
+			personToReturn = personList[i];			// Set the return person to that person
+			found = true;							// Set found = true
+		}
+	}
+	if (!found)
+		cout << "This person not found" << endl;
 	return personToReturn;
+		
 }
 
 Person *FamilyTree::getUnknownPerson()
@@ -87,12 +102,12 @@ Person *FamilyTree::getUnknownPerson()
 
 void FamilyTree::addToTree(Person* _person)
 {
-	cout << "in addToTree" << endl;
-	personList.push_back(_person);
-	bool addAsRoot = true;
-	addAsRoot = searchForExistingMother(_person);
+	//cout << "in addToTree" << endl;
+	personList.push_back(_person);							// Add the new person to the person list
+	bool addAsRoot = true;									// Make bool to store weather or not the new person is the root of their family
+	addAsRoot = searchForExistingMother(_person);			// Search for an existing mother, if found return false
 	if (addAsRoot)
-		addAsRoot = searchForExistingFather(_person);
+		addAsRoot = searchForExistingFather(_person);		
 	else
 		searchForExistingFather(_person);
 	if (addAsRoot)
@@ -105,89 +120,89 @@ void FamilyTree::addToTree(Person* _person)
 		searchForSpouse(_person);
 	searchForExistingChildren(_person);
 		
-	if (addAsRoot)
+	if (addAsRoot)							// If no family members were found as existing
 	{
-		cout << "adding " << _person -> getFullName() << " as a root" << endl;
-		rootList.push_back(_person);
-		_person -> setRoot(_person);
+		//cout << "adding " << _person -> getFullName() << " as a root" << endl;
+		rootList.push_back(_person);		// Add the new person as the root of their family
+		_person -> setRoot(_person);		// Set the persons root to themself
 	}
 }
 
 bool FamilyTree::searchForExistingMother(Person *_person)
 {
-	cout << "in searchForExistingMother" << endl;
-	bool addAsRoot = true;
-	if (_person -> getBiologicalMother() -> getFullName()  != "Unknown")
+	//cout << "in searchForExistingMother" << endl;
+	bool addAsRoot = true;																// Bool to store if person found
+	if (_person -> getBiologicalMother() -> getFullName()  != "Unknown")				// If persons mother is not unknown
 	{
-		Person *mother = findPerson(_person -> getBiologicalMother() -> getFullName());
-		if (mother != NULL)
+		Person *mother = findPerson(_person -> getBiologicalMother() -> getFullName());	// search for their mother
+		if (mother != NULL)																// if their mother was found
 		{
-			for (int i = 0; i < mother -> childList.size(); i++)
+			for (int i = 0; i < mother -> childList.size(); i++)							// For each child to the found mother
 			{
-				if (mother -> childList[i] -> getFullName() == _person -> getFullName())
-					mother -> childList.erase(mother -> childList.begin() + i - 1);
+				if (mother -> childList[i] -> getFullName() == _person -> getFullName())// If the current child is the _person
+					mother -> childList.erase(mother -> childList.begin() + i - 1);		// Delete the temp child node from the mothers child list
 			}
-			mother -> addChild(_person);
-			_person -> setBiologicalMother(mother);
-			_person -> setRoot(mother -> getRoot());
-			addAsRoot = false;
+			mother -> addChild(_person);												// Link the mother to the real child node
+			_person -> setBiologicalMother(mother);										// Link _person to the mother
+			_person -> setRoot(mother -> getRoot());									// Set the _person's root to the mothers root
+			addAsRoot = false;															// Do not add the person as a root
 		}
 	}
-	else
+	else 					// If the mother was unknown
 	{
-		_person -> setBiologicalMother(unknownPerson);
+		_person -> setBiologicalMother(unknownPerson);									// Set mother as unknown
 	}
 	return addAsRoot;
 }
 
 bool FamilyTree::searchForExistingFather(Person *_person)
 {
-	cout << "in searchForExistingFather" << endl;
-	bool addAsRoot = true;
-	if (_person -> getBiologicalFather() -> getFullName()  != "Unknown")
+	//cout << "in searchForExistingFather" << endl;
+	bool addAsRoot = true;																// Bool to store if person found
+	if (_person -> getBiologicalFather() -> getFullName()  != "Unknown")				// If persons father is not unknown
 	{
-		Person *father = findPerson(_person -> getBiologicalFather() -> getFullName());
-		if (father != NULL)
+		Person *father = findPerson(_person -> getBiologicalFather() -> getFullName());// search for their father
+		if (father != NULL)																// if their father was found
 		{
-			for (int i = 0; i < father -> childList.size(); i++)
+			for (int i = 0; i < father -> childList.size(); i++)							// For each child to the found father
 			{
-				if (father -> childList[i] -> getFullName() == _person -> getFullName())
-					father -> childList.erase(father -> childList.begin() + i - 1);
+				if (father -> childList[i] -> getFullName() == _person -> getFullName())// If the current child is the _person
+					father -> childList.erase(father -> childList.begin() + i - 1);		// Delete the temp child node from the fathers child list
 			}
-			father -> addChild(_person);
-			_person -> setBiologicalFather(father);
-			_person -> setRoot(father -> getRoot());
-			addAsRoot = false;
+			father -> addChild(_person);												// Link the father to the real child node
+			_person -> setBiologicalFather(father);										// Link _person to the mother
+			_person -> setRoot(father -> getRoot());									// Set the _person's root to the fathers root
+			addAsRoot = false;															// Do not add the person as a root
 		}
 	}
-	else
+	else 					// If the father was unknown
 	{
-		_person -> setBiologicalFather(unknownPerson);
+		_person -> setBiologicalFather(unknownPerson);							// Set father as unknown
 	}
 	return addAsRoot;
 }
 
 bool FamilyTree::searchForSpouse(Person *_person)
 {
-	cout << "in searchForSpouse" << endl;
+	//cout << "in searchForSpouse" << endl;
 	bool addAsRoot = true;
-	if (_person -> getSpouse() != NULL && _person -> getSpouse() -> getFullName()  != "Unknown")
+	if (_person -> getSpouse() != NULL && _person -> getSpouse() -> getFullName()  != "Unknown")	// If spouse is neither Unknown or None
 	{
-		Person *spouse = findPerson(_person -> getSpouse() -> getFullName());
-		if (spouse != NULL)
+		Person *spouse = findPerson(_person -> getSpouse() -> getFullName());	// Search for the spouse
+		if (spouse != NULL)														// If found
 		{
-			delete _person -> getSpouse();
-			if (spouse -> getSpouse() != NULL)
-				delete spouse -> getSpouse();
-			spouse -> setSpouse(_person);
-			_person -> setSpouse(spouse);
-			_person -> setRoot(spouse -> getRoot());
-			addAsRoot = false;
+			delete _person -> getSpouse();										// Delete _person's temp spouse node
+			if (spouse -> getSpouse() != NULL)									// If the found spouse had a spouse
+				delete spouse -> getSpouse();									// Delete their spouse node
+			spouse -> setSpouse(_person);										// set the spouses spouse to _person
+			_person -> setSpouse(spouse);										// Set persons spouse to spouse
+			_person -> setRoot(spouse -> getRoot());							// Set the persons root to spouses root
+			addAsRoot = false;													// Do not add person as root
 		}
 	}
-	else if (_person -> getSpouse() != NULL)
+	else if (_person -> getSpouse() != NULL)									// If the spouse was unknown
 	{
-		_person -> setSpouse(unknownPerson);
+		_person -> setSpouse(unknownPerson);									// Set persons spouse to the Unkown person
 	}
 	return addAsRoot;
 }
@@ -195,26 +210,26 @@ bool FamilyTree::searchForSpouse(Person *_person)
 
 bool FamilyTree::searchForExistingSiblings(Person* _person)
 {
-	cout << "In searchForExistingSiblings" << endl;
+	//cout << "In searchForExistingSiblings" << endl;
 	bool addAsRoot = true;												// Value to return
 	int destination = _person -> sibList.size();						// Set the destination before the loop so it doesnt increase while looping
 	for (int i = 0; i < destination; i++)								// For each sibbling to current person
 	{
-		cout << "flag 1" << endl;
+		//cout << "flag 1" << endl;
 		Person *sib = findPerson(_person -> sibList[i] -> getFullName());		// find the sibling using the findPerson method
 		if (sib != NULL)													// If a person was found...
 		{
 			for (int j = 0; j < sib -> sibList.size(); j++)			// For each sibling to the person found...
 			{
-				cout << "flag 2" << endl;
+				//cout << "flag 2" << endl;
 				if (sib -> sibList[j] -> getFullName() == _person -> getFullName())		// If the sibling to the person found is the current person, 
 				{
-					cout << "erasing " << sib -> sibList[j] -> getFullName() << endl;
+					//cout << "erasing " << sib -> sibList[j] -> getFullName() << endl;
 					sib -> sibList.erase(sib -> sibList.begin() + j - 1);				// Erase that person node from the list
 				}
 			}
 			sib -> addSibling(_person);												// Add the real person node to the sibling list
-			cout << "erasing " << _person -> sibList[i] -> getFullName() << endl;
+			//cout << "erasing " << _person -> sibList[i] -> getFullName() << endl;
 			_person -> sibList.erase(_person -> sibList.begin() + i - 1);
 			_person -> addSibling(sib);
 			_person -> setRoot(sib -> getRoot());												// Add the current found sibling to the current persons list
@@ -226,30 +241,30 @@ bool FamilyTree::searchForExistingSiblings(Person* _person)
 
 bool FamilyTree::searchForExistingChildren(Person* _person)
 {
-	cout << "in searchForExistingChildren" << endl;
+	//cout << "in searchForExistingChildren" << endl;
 	bool addAsRoot = true;
-	for (int i = 0; i < _person -> childList.size(); i++)
+	for (int i = 0; i < _person -> childList.size(); i++)									// For each child
 	{
-		Person *child = findPerson(_person -> childList[i] -> getFullName());
-		if (child != NULL)
+		Person *child = findPerson(_person -> childList[i] -> getFullName());				// Search for the child
+		if (child != NULL)																	// If the child was found
 		{
-			for (int j = 0; j < child -> childList.size(); j++)
+			/*for (int j = 0; j < child -> childList.size(); j++)
 			{
 				if (child -> childList[j] -> getFullName() == _person -> getFullName())
 				{
 					cout << "erasing " << child -> childList[j] -> getFullName() << endl;
 					child -> childList.erase(child -> childList.begin() + j - 1);
 				}
-			}
-			if (_person -> getFatherOrMother() == 0)
-				child -> setBiologicalFather(_person);
-			else if (_person -> getFatherOrMother() == 1)
-				child -> setBiologicalMother(_person);
-			cout << "erasing " << _person -> childList[i] -> getFullName() << endl;
-			_person -> childList.erase(_person -> childList.begin() + i - 1);
-			_person -> addChild(child);
-			child -> setRoot(_person -> getRoot());
-			removeFromRootList(child);
+			}*/
+			if (_person -> getFatherOrMother() == 0)		// If the person is a father
+				child -> setBiologicalFather(_person);		// Set that person as childs biological father
+			else if (_person -> getFatherOrMother() == 1)	// Else the person is a mother
+				child -> setBiologicalMother(_person);		// Set that person as childs biological mother
+			//cout << "erasing " << _person -> childList[i] -> getFullName() << endl;		// Delete the t
+			_person -> childList.erase(_person -> childList.begin() + i - 1);			// Erase the temporary child node
+			_person -> addChild(child);													// Add the real child as a child to person
+			child -> setRoot(_person -> getRoot());										// Set the childs root to their parents root
+			removeFromRootList(child);													// remove the child from the root list
 		}
 	}
 	return addAsRoot;
@@ -262,9 +277,9 @@ int FamilyTree::getRootListSize()
 
 void FamilyTree::resetVisited()
 {
-	cout << "reseting visited" << endl;
-	for (int i = 0; i < personList.size(); i++)
-		personList[i] -> setVisited(false);
+	//cout << "reseting visited" << endl;
+	for (int i = 0; i < personList.size(); i++)		// For each person in the family tree (Unknown person is not in the family tree and will remain unchanged
+		personList[i] -> setVisited(false);			// Set that persons visited to false
 }
 
 void FamilyTree::setUnknownPerson(Person *_person)
@@ -274,13 +289,13 @@ void FamilyTree::setUnknownPerson(Person *_person)
 
 void FamilyTree::removeFromRootList(Person *_person)
 {
-	bool done = false;
-	for (int i = 0; !done && i < rootList.size(); i++)
+	bool done = false;									
+	for (int i = 0; !done && i < rootList.size(); i++)	// While not done, for each person in root list
 	{
-		if (rootList[i] == _person)
+		if (rootList[i] == _person)						// If the person == _person
 		{
-			rootList.erase(rootList.begin() + i - 1);
-			done = true;
+			rootList.erase(rootList.begin() + i - 1);	// Erase that node from the root list
+			done = true;								// Set done to true
 		}
 	}
 }
@@ -292,48 +307,48 @@ void FamilyTree::printAllRoots()
 	else
 	{
 		cout << "Roots";
-		for (int i = 0; i < rootList.size(); i++)
-			cout << ", " << rootList[i] -> getFullName();
+		for (int i = 0; i < rootList.size(); i++)			// For each root in the root list
+			cout << ", " << rootList[i] -> getFullName();	// Print the roots name
 		cout << endl;
 	}
 }
 
 void FamilyTree::printAllFamilies()
 {
-	for (int i = 0; i < rootList.size(); i++)
-		printPersonsFamily(rootList[i]);
+	for (int i = 0; i < rootList.size(); i++)				// For every root in root list
+		printPersonsFamily(rootList[i]);					// Print that roots family
 }
 
 void FamilyTree::printPersonsFamily(Person *_person)
 {
-	if (_person -> getBiologicalFather() != NULL)
-		_person -> getBiologicalFather() -> printInformation();
-	if (_person -> getBiologicalMother() != NULL)
-		_person -> getBiologicalMother() -> printInformation();
+	if (_person -> getBiologicalFather() != NULL)					// Roots will have temp parent nodes, if they have a temp father
+		_person -> getBiologicalFather() -> printInformation();		// Print the temp father
+	if (_person -> getBiologicalMother() != NULL)					// If they have a temp mother
+		_person -> getBiologicalMother() -> printInformation();		// Print the temp mother
 	
-	queue<Person*> personQueue;
-	personQueue.push(_person);
+	queue<Person*> personQueue;											// Queue for breadth first searching
+	personQueue.push(_person);											// Push the current person to queue
 	while (personQueue.empty() != true)
 	{
-		Person *currentPerson = personQueue.front();
-		personQueue.pop();
-		if (currentPerson -> getVisited() != true)
+		Person *currentPerson = personQueue.front();					// Get next person in queue
+		personQueue.pop();												// Delete them from queue
+		if (currentPerson -> getVisited() != true)						// If the person has not been visited
 		{
-			currentPerson -> printInformation();
-			currentPerson -> setVisited(true);
+			currentPerson -> printInformation();						// Print the current persons information
+			currentPerson -> setVisited(true);							// Set their visited to true
 		}
 		
-		if (currentPerson -> getSpouse() != NULL)
-			personQueue.push(currentPerson -> getSpouse());
-		for (int i = 0; i < currentPerson -> sibList.size(); i++)
+		if (currentPerson -> getSpouse() != NULL)						// If the person has a spouse or unknown
+			personQueue.push(currentPerson -> getSpouse());				// Enqueue their spouse
+		for (int i = 0; i < currentPerson -> sibList.size(); i++)		// For each sibling in the persons sibList
 		{
-			if (currentPerson -> sibList[i] -> getVisited() != true)
-				personQueue.push(currentPerson -> sibList[i]);
+			if (currentPerson -> sibList[i] -> getVisited() != true)	// If the sib is unvisited...
+				personQueue.push(currentPerson -> sibList[i]);			// Enqueue that sib
 		}
-		for (int i = 0; i < currentPerson -> childList.size(); i++)
+		for (int i = 0; i < currentPerson -> childList.size(); i++)		// For each child in persons childList
 		{
-			if (currentPerson -> childList[i] -> getVisited() != true)
-				personQueue.push(currentPerson -> childList[i]);
+			if (currentPerson -> childList[i] -> getVisited() != true) 	// If the current child is unvisited
+				personQueue.push(currentPerson -> childList[i]);		// Enqueue that child
 		}
 	}
 }
