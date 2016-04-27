@@ -15,6 +15,11 @@ Person::Person()
 	
 }
 
+Person::Person(string _name)
+{
+	fullName = _name;
+}
+
 Person::Person(string _name, FamilyTree *_family)
 {
 	fullName = _name;
@@ -63,6 +68,11 @@ void Person::setVisited(bool _visited)
 	visited = _visited;
 }
 
+void Person::setFatherOrMother(int _fatherOrMother)
+{
+	fatherOrMother = _fatherOrMother;
+}
+
 Person *Person::getBiologicalFather()
 {
 	return biologicalFather;
@@ -81,6 +91,11 @@ string Person::getFullName()
 bool Person::getVisited()
 {
 	return visited;
+}
+
+int Person::getFatherOrMother()
+{
+	return fatherOrMother;
 }
 
 FamilyTree *Person::getFamily()

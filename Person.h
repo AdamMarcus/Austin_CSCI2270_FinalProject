@@ -20,6 +20,7 @@ class Person
 		std::vector<Person*> childList;
 		
 		Person();
+		Person(std::string);
 		Person(std::string, FamilyTree*);
 		Person(std::string, std::string, std::string, FamilyTree*);
 		~Person();
@@ -30,12 +31,15 @@ class Person
 		void setVisited();
 		void setFamily(FamilyTree*);
 		void setVisited(bool);
+		void setFatherOrMother(int);
 		bool getVisited();
 		Person *getBiologicalFather();
 		Person *getBiologicalMother();
+		int getFatherOrMother();
 		std::string getFullName();
 		FamilyTree *getFamily();
     private:
+		int fatherOrMother = -1;
 		bool visited = false;
 		std::string fullName = "Unknown";
 		FamilyTree *family;

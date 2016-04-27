@@ -15,6 +15,9 @@ using namespace std;
 int main()
 {
 	FamilyTree *myFamilyTree = new FamilyTree();
+	Person *unknownPerson = new Person("Unknown");
+	unknownPerson -> setVisited(true);
+	myFamilyTree -> setUnknownPerson(unknownPerson);
 	bool done = false;
 	while (!done)		//write menu
 	{
@@ -39,8 +42,6 @@ int main()
 			string fathersName;
 			getline(cin, fathersName);
 			Person *newPerson = new Person(name, mothersName, fathersName, myFamilyTree);
-			myFamilyTree -> addToTree(newPerson);
-			
 			cout << "Does " << newPerson -> getFullName() << " have any siblings?"; 
 			bool doneWithSiblings = false;
 			while (!doneWithSiblings)
@@ -103,6 +104,7 @@ int main()
 					cout << "Does " << newPerson -> getFullName() << " have any more children?";
 				}
 			}
+			myFamilyTree -> addToTree(newPerson);
 		}
 		else if (userChoiceString == "2")
 		{
@@ -110,7 +112,7 @@ int main()
 			cin.ignore();
 			string name;
 			getline(cin, name);
-			myFamilyTree -> resetVisited();
+			//myFamilyTree -> resetVisited();
 			Person *person = myFamilyTree -> findPerson(name);
 			if (person != NULL)
 			{
