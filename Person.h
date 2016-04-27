@@ -16,11 +16,11 @@ class FamilyTree;
 class Person
 {
     public:
-		std::vector<Person*> sibList;
-		std::vector<Person*> childList;
+		std::vector<Person*> sibList;		// A list for siblings
+		std::vector<Person*> childList;		// A list for children
 		
 		Person();
-		Person(std::string);
+		Person(std::string);	
 		Person(std::string, FamilyTree*);
 		Person(std::string, std::string, std::string, FamilyTree*);
 		Person(std::string, std::string, std::string, std::string, std::string);
@@ -29,7 +29,7 @@ class Person
 		void setBiologicalMother(Person*);
 		void addSibling(Person*);
 		void addChild(Person*);
-		void printInformation();
+		void printInformation();		// Print personal information
 		void setVisited();
 		void setFamily(FamilyTree*);
 		void setVisited(bool);
@@ -45,14 +45,14 @@ class Person
 		std::string getFullName();
 		FamilyTree *getFamily();
     private:
-		int fatherOrMother = -1;
-		bool visited = false;
+		int fatherOrMother = -1;			// 0 indicates father, 1 indicates mother
+		bool visited = false;				// Indicates if visited for breadth first searching
 		std::string fullName = "Unknown";
-		Person* root = NULL;
-		FamilyTree *family;
-		Person *biologicalFather = NULL;
-		Person *biologicalMother = NULL;
-		Person *spouse = NULL;
+		Person* root = NULL;				// Holds the root of a persons family
+		FamilyTree *family;	
+		Person *biologicalFather = NULL;	// Pointer to persons father
+		Person *biologicalMother = NULL;	// Pointer to persons mother
+		Person *spouse = NULL;				// Pointer to persons spouse
 };
 
 #endif
