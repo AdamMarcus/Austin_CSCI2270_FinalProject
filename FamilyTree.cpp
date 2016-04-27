@@ -24,62 +24,7 @@ FamilyTree::~FamilyTree()
 }
 
 Person* FamilyTree::findPerson(string _name)
-{
-	/*//cout << "In findPerson searching for " << _name << endl;
-	resetVisited();					// Reset all the visited fields
-	Person *personToReturn = NULL;	// Make a person to hold the person to return when found
-	queue<Person*> personQueue;		// Make a queue to hold person nodes during searching
-	bool found = false;				// Boolean to indicate if person has been found
-	if (rootList.size() <= 0)		// Queue every
-		found = true;
-	for (int i = 0; i < rootList.size(); i++)
-	{
-		cout << "Pushing " << rootList[i] -> getFullName() << " to queue. (rootList)" << endl;
-		personQueue.push(rootList[i]);
-	}
-	while (!found && !personQueue.empty())
-	{
-		Person *currentPerson = personQueue.front();
-		personQueue.pop();
-		if (currentPerson -> getVisited() == false)
-		{
-			if (currentPerson -> getFullName() == _name)
-			{
-				cout << currentPerson -> getFullName() << " has been found." << endl;
-				personToReturn = currentPerson;
-				found = true;
-			}
-			if (currentPerson -> getBiologicalFather() -> getVisited() != true)
-				personQueue.push(currentPerson -> getBiologicalFather());
-			if (currentPerson -> getBiologicalMother() -> getVisited() != true)
-				personQueue.push(currentPerson -> getBiologicalMother());
-			if (currentPerson -> getSpouse() != NULL && currentPerson -> getSpouse() -> getVisited() != true)
-				personQueue.push(currentPerson -> getSpouse());
-			for (int i = 0; i < currentPerson -> sibList.size(); i++)
-			{
-				if (currentPerson -> sibList[i] -> getVisited() != true)
-				{
-					cout << "Pushing " << currentPerson -> sibList[i] -> getFullName() << " to queue." << endl;
-					personQueue.push(currentPerson -> sibList[i]);
-				}
-			}
-			for (int i = 0; i < currentPerson -> childList.size(); i++)
-			{
-				if (currentPerson -> childList[i] -> getVisited() != true)
-				{
-					cout << "Pushing " << currentPerson -> childList[i] -> getFullName() << " to queue." << endl;
-					personQueue.push(currentPerson -> childList[i]);
-				}
-			}
-			currentPerson -> setVisited(true);
-		}
-	}
-	if (personToReturn == NULL)
-		cout << "This person not found" << endl;
-	else
-		cout << "Leaving findPerson, " << personToReturn -> getFullName() << " found."<< endl;
-	return personToReturn;*/
-	
+{	
 	Person *personToReturn = NULL;					// Make a person to hold the person to return when found
 	bool found = false;								// Boolean to indicate if person has been found
 	for (int i = 0; i < personList.size(); i++)		// For each person in the tree
