@@ -19,7 +19,8 @@ Adam Austin
 Contributors:
 
 Open issues/bugs:
-When a new Person is made their temporary parent nodes do not add them as a child
+1.When a new Person is made their temporary parent nodes do not add them as a child
+2.When Printing all families, some Person Nodes are disapearing 
 
 ----------------------------------------------------------------------------------------------------------------
 
