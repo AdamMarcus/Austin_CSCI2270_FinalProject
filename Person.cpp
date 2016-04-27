@@ -39,8 +39,8 @@ Person::Person(string _fullName, string _mothersName, string _fathersName, strin
 	biologicalMother = new Person(_mothersName);
 	biologicalFather = new Person(_fathersName);
 	if (_spouseName != "None")
-		spouse = new Person(_spouseName);
-	if (_gender == "m")
+		spouse = new Person(_spouseName);		// If spouse name is none, leave spouse as NULL
+	if (_gender == "m")							// Set the persons gender to determin if they would be a father or mother
 		fatherOrMother = 0;
 	else
 		fatherOrMother = 1;
@@ -71,7 +71,7 @@ void Person::addChild(Person *_inputPerson)
 	childList.push_back(_inputPerson);
 }
 
-void Person::printInformation()
+void Person::printInformation()			// Print all of the persons personal information
 {
 	cout << "=====================" << endl;
 	cout << "Name: " << fullName << endl;
