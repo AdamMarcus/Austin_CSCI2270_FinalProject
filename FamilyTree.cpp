@@ -35,8 +35,6 @@ Person* FamilyTree::findPerson(string _name)
 			found = true;							// Set found = true
 		}
 	}
-	if (!found)
-		cout << "This person not found" << endl;
 	return personToReturn;
 		
 }
@@ -224,8 +222,8 @@ int FamilyTree::getRootListSize()
 void FamilyTree::resetVisited()
 {
 	//cout << "reseting visited" << endl;
-	for (int i = 0; i < personList.size(); i++)		// For each person in the family tree (Unknown person is not in the family tree and will remain unchanged
-		personList[i] -> setVisited(false);			// Set that persons visited to false
+	for (int i = 0; i < personList.size(); i++)							// For each person in the family tree (Unknown person is not in the family tree and will remain unchanged
+		personList[i] -> setVisited(false);								// Set that persons visited to false
 }
 
 void FamilyTree::setUnknownPerson(Person *_person)
@@ -236,12 +234,12 @@ void FamilyTree::setUnknownPerson(Person *_person)
 void FamilyTree::removeFromRootList(Person *_person)
 {
 	bool done = false;									
-	for (int i = 0; !done && i < rootList.size(); i++)	// While not done, for each person in root list
+	for (int i = 0; !done && i < rootList.size(); i++)					// While not done, for each person in root list
 	{
-		if (rootList[i] == _person)						// If the person == _person
+		if (rootList[i] == _person)										// If the person == _person
 		{
-			rootList.erase(rootList.begin() + i - 1);	// Erase that node from the root list
-			done = true;								// Set done to true
+			rootList.erase(rootList.begin() + i - 1);					// Erase that node from the root list
+			done = true;												// Set done to true
 		}
 	}
 }
@@ -253,24 +251,29 @@ void FamilyTree::printAllRoots()
 	else
 	{
 		cout << "Roots";
-		for (int i = 0; i < rootList.size(); i++)			// For each root in the root list
-			cout << ", " << rootList[i] -> getFullName();	// Print the roots name
+		for (int i = 0; i < rootList.size(); i++)						// For each root in the root list
+			cout << ", " << rootList[i] -> getFullName();				// Print the roots name
 		cout << endl;
 	}
 }
 
 void FamilyTree::printAllFamilies()
 {
-	for (int i = 0; i < rootList.size(); i++)				// For every root in root list
-		printPersonsFamily(rootList[i]);					// Print that roots family
+	resetVisited();
+	for (int i = 0; i < rootList.size(); i++)							// For every root in root list
+	{
+		cout << "Family #" << i << endl;
+		printPersonsFamily(rootList[i]);								// Print that roots family
+	}
 }
 
 void FamilyTree::printPersonsFamily(Person *_person)
 {
-	if (_person -> getBiologicalFather() != NULL)					// Roots will have temp parent nodes, if they have a temp father
-		_person -> getBiologicalFather() -> printInformation();		// Print the temp father
-	if (_person -> getBiologicalMother() != NULL)					// If they have a temp mother
-		_person -> getBiologicalMother() -> printInformation();		// Print the temp mother
+	//cout << 
+	if (_person -> getBiologicalFather() != NULL)						// Roots will have temp parent nodes, if they have a temp father
+		_person -> getBiologicalFather() -> printInformation();			// Print the temp father
+	if (_person -> getBiologicalMother() != NULL)						// If they have a temp mother
+		_person -> getBiologicalMother() -> printInformation();			// Print the temp mother
 	
 	queue<Person*> personQueue;											// Queue for breadth first searching
 	personQueue.push(_person);											// Push the current person to queue

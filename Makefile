@@ -1,3 +1,7 @@
+# Adam Austin
+# 4/22/2016
+# TA: Quesada
+
 # Makefiles! Build an executable for the Student example
 # Author: Adam Austin
 # -Wall = extra warnings

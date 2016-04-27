@@ -75,6 +75,10 @@ void Person::printInformation()			// Print all of the persons personal informati
 {
 	cout << "=====================" << endl;
 	cout << "Name: " << fullName << endl;
+	if (getRoot() != NULL)
+		cout << "Root: " << getRoot() -> getFullName() << endl;
+	else
+		cout << "Root is null" << endl;
 	if (biologicalMother != NULL)
 		cout << "Mother: " << biologicalMother -> getFullName() << endl;
 	if (biologicalFather != NULL)

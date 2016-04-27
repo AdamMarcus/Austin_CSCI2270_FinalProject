@@ -48,6 +48,8 @@ int main()
 			cout << "Does " << name << " have a spouse? If so, enter their full name, \"First Last\", if not enter \"None\", and if you do not know, enter \"Unknown\"." << endl;
 			string spouse;
 			getline(cin, spouse);
+			if (spouse == "none")		// Account for possible lower case input
+				spouse = "None";
 			cout << "Is " << name << " a male or female? For male enter \"m\" and for female enter \"f\"." << endl;
 			string gender = "";
 			bool doneWithGender = false;
@@ -79,7 +81,7 @@ int main()
 					cout << userInput << " is a sibling? Enter \"Yes \" or \"No\": ";
 					string confirm;
 					getline(cin, confirm);
-					if (confirm == "Yes" || userInput == "yes")			// If the current input is a sibling
+					if (confirm == "Yes" || confirm == "yes")			// If the current input is a sibling
 					{
 						cout << userInput << " has been added! " << endl;		// Add that sibling to the new persons sibList
 						Person *newSib = new Person(userInput, myFamilyTree);
@@ -91,7 +93,7 @@ int main()
 					cout << "Does " << newPerson -> getFullName() << " have any more siblings? ";
 				}
 			}
-			cout << "Does " << newPerson -> getFullName() << " have any children?"; 
+			cout << "Does " << newPerson -> getFullName() << " have any children? "; 
 			bool doneWithChildren = false;
 			while (!doneWithChildren)
 			{
@@ -107,7 +109,7 @@ int main()
 					cout << userInput << " is a child? Enter \"Yes \" or \"No\": ";
 					string confirm;
 					getline(cin, confirm);
-					if (confirm == "Yes" || userInput == "yes")				// If the current input is a child
+					if (confirm == "Yes" || confirm == "yes")				// If the current input is a child
 					{
 						cout << userInput << " has been added!" << endl;		// Add the child to the new persons childList
 						Person *newChild = new Person(userInput, myFamilyTree);
@@ -141,8 +143,10 @@ int main()
 			Person *person = myFamilyTree -> findPerson(name);
 			if (person != NULL)
 			{
-				myFamilyTree -> printPersonsFamily(person);		// Print persons family
+				myFamilyTree -> printPersonsFamily(person -> getRoot());		// Print persons family
 			}
+			else
+				cout << "This person not found" << endl;
 		}
 		else if (userChoiceString == "4")	// Print all families
 		{
