@@ -28,6 +28,7 @@ class Person
 		void setBiologicalMother(Person*);
 		void addSibling(Person*);
 		void addChild(Person*);
+		void printInformation();
 		void setVisited();
 		void setFamily(FamilyTree*);
 		void setVisited(bool);

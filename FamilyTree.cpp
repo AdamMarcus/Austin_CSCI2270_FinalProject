@@ -24,7 +24,7 @@ FamilyTree::~FamilyTree()
 
 Person* FamilyTree::findPerson(string _name)
 {
-	cout << "In findPerson" << endl;
+	cout << "In findPerson searching for " << _name << endl;
 	resetVisited();
 	Person *personToReturn = NULL;
 	queue<Person*> personQueue;
@@ -200,32 +200,31 @@ bool FamilyTree::searchForExistingSiblings(Person* _person)
 
 bool FamilyTree::searchForExistingChildren(Person* _person)
 {
+	cout << "in searchForExistingChildren" << endl;
 	bool addAsRoot = true;
-	/*for (int i = 0; i < _person -> childList.size(); i++)
+	for (int i = 0; i < _person -> childList.size(); i++)
 	{
-		if (_person -> childList[i] -> getFullName()  != "Unknown")
+		Person *child = findPerson(_person -> childList[i] -> getFullName());
+		if (child != NULL)
 		{
-			Person *child = findPerson(_person -> childList[i] -> getFullName());
-			if (child != NULL)
+			for (int j = 0; j < child -> childList.size(); j++)
 			{
-				for (int i = 0; i < child -> childList.size(); i++)
+				if (child -> childList[j] -> getFullName() == _person -> getFullName())
 				{
-					if (child -> childList[i] -> getFullName() == _person -> getFullName())
-						child -> childList.erase(child -> childList.begin() + i - 1);
+					cout << "erasing " << child -> childList[j] -> getFullName() << endl;
+					child -> childList.erase(child -> childList.begin() + j - 1);
 				}
-				if (_person -> getFatherOrMother() == 0)
-					child -> setBiologicalFather(_person);
-				else if (_person -> getFatherOrMother() == 1)
-					child -> setBiologicalMother(_person);
-				_person -> addChild(child);
-				removeFromRootList(
 			}
+			if (_person -> getFatherOrMother() == 0)
+				child -> setBiologicalFather(_person);
+			else if (_person -> getFatherOrMother() == 1)
+				child -> setBiologicalMother(_person);
+			cout << "erasing " << _person -> childList[i] -> getFullName() << endl;
+			_person -> childList.erase(_person -> childList.begin() + i - 1);
+			_person -> addChild(child);
+			removeFromRootList(child);
 		}
-		else
-		{
-			_person -> setBiologicalFather(unknownPerson);
-		}
-	}*/
+	}
 	return addAsRoot;
 }
 

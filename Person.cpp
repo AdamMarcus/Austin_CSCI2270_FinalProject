@@ -58,6 +58,28 @@ void Person::addChild(Person *_inputPerson)
 	childList.push_back(_inputPerson);
 }
 
+void Person::printInformation()
+{
+	cout << "=====================" << endl;
+	cout << "Name: " << fullName << endl;
+	if (biologicalMother != NULL)
+		cout << "Mother: " << biologicalMother -> getFullName() << endl;
+	if (biologicalFather != NULL)
+		cout << "Father: " << biologicalFather -> getFullName() << endl;
+	cout << "Siblings";
+	for (int i = 0; i < sibList.size(); i++)
+	{
+		cout << ", " << sibList[i] -> getFullName();
+	}
+	cout << endl;
+	cout << "Children";
+	for (int i = 0; i < childList.size(); i++)
+	{
+		cout << ", " << childList[i] -> getFullName();
+	}
+	cout << endl;
+}
+
 void Person::setFamily(FamilyTree *_family)
 {
 	family = _family;
