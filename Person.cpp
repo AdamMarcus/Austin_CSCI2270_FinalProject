@@ -117,6 +117,11 @@ void Person::setSpouse(Person *_person)
 	spouse = _person;
 }
 
+void Person::setRoot(Person *_person)
+{
+	root = _person;
+}
+
 Person *Person::getBiologicalFather()
 {
 	return biologicalFather;
@@ -130,6 +135,11 @@ Person *Person::getBiologicalMother()
 Person *Person::getSpouse()
 {
 	return spouse;
+}
+
+Person *Person::getRoot()
+{
+	return root;
 }
 
 string Person::getFullName()

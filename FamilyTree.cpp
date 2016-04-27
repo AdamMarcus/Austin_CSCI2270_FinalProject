@@ -109,6 +109,7 @@ void FamilyTree::addToTree(Person* _person)
 	{
 		cout << "adding " << _person -> getFullName() << " as a root" << endl;
 		rootList.push_back(_person);
+		_person -> setRoot(_person);
 	}
 }
 
@@ -128,6 +129,7 @@ bool FamilyTree::searchForExistingMother(Person *_person)
 			}
 			mother -> addChild(_person);
 			_person -> setBiologicalMother(mother);
+			_person -> setRoot(mother -> getRoot());
 			addAsRoot = false;
 		}
 	}
@@ -154,6 +156,7 @@ bool FamilyTree::searchForExistingFather(Person *_person)
 			}
 			father -> addChild(_person);
 			_person -> setBiologicalFather(father);
+			_person -> setRoot(father -> getRoot());
 			addAsRoot = false;
 		}
 	}
@@ -178,6 +181,7 @@ bool FamilyTree::searchForSpouse(Person *_person)
 				delete spouse -> getSpouse();
 			spouse -> setSpouse(_person);
 			_person -> setSpouse(spouse);
+			_person -> setRoot(spouse -> getRoot());
 			addAsRoot = false;
 		}
 	}
@@ -212,7 +216,8 @@ bool FamilyTree::searchForExistingSiblings(Person* _person)
 			sib -> addSibling(_person);												// Add the real person node to the sibling list
 			cout << "erasing " << _person -> sibList[i] -> getFullName() << endl;
 			_person -> sibList.erase(_person -> sibList.begin() + i - 1);
-			_person -> addSibling(sib);												// Add the current found sibling to the current persons list
+			_person -> addSibling(sib);
+			_person -> setRoot(sib -> getRoot());												// Add the current found sibling to the current persons list
 			addAsRoot = false;														// Set the return value to false to indicate someone in that tree already existed
 		}
 	}
@@ -243,6 +248,7 @@ bool FamilyTree::searchForExistingChildren(Person* _person)
 			cout << "erasing " << _person -> childList[i] -> getFullName() << endl;
 			_person -> childList.erase(_person -> childList.begin() + i - 1);
 			_person -> addChild(child);
+			child -> setRoot(_person -> getRoot());
 			removeFromRootList(child);
 		}
 	}
@@ -289,5 +295,45 @@ void FamilyTree::printAllRoots()
 		for (int i = 0; i < rootList.size(); i++)
 			cout << ", " << rootList[i] -> getFullName();
 		cout << endl;
+	}
+}
+
+void FamilyTree::printAllFamilies()
+{
+	for (int i = 0; i < rootList.size(); i++)
+		printPersonsFamily(rootList[i]);
+}
+
+void FamilyTree::printPersonsFamily(Person *_person)
+{
+	if (_person -> getBiologicalFather() != NULL)
+		_person -> getBiologicalFather() -> printInformation();
+	if (_person -> getBiologicalMother() != NULL)
+		_person -> getBiologicalMother() -> printInformation();
+	
+	queue<Person*> personQueue;
+	personQueue.push(_person);
+	while (personQueue.empty() != true)
+	{
+		Person *currentPerson = personQueue.front();
+		personQueue.pop();
+		if (currentPerson -> getVisited() != true)
+		{
+			currentPerson -> printInformation();
+			currentPerson -> setVisited(true);
+		}
+		
+		if (currentPerson -> getSpouse() != NULL)
+			personQueue.push(currentPerson -> getSpouse());
+		for (int i = 0; i < currentPerson -> sibList.size(); i++)
+		{
+			if (currentPerson -> sibList[i] -> getVisited() != true)
+				personQueue.push(currentPerson -> sibList[i]);
+		}
+		for (int i = 0; i < currentPerson -> childList.size(); i++)
+		{
+			if (currentPerson -> childList[i] -> getVisited() != true)
+				personQueue.push(currentPerson -> childList[i]);
+		}
 	}
 }

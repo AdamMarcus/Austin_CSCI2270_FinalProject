@@ -35,10 +35,12 @@ class Person
 		void setVisited(bool);
 		void setFatherOrMother(int);
 		void setSpouse(Person*);
+		void setRoot(Person*);
 		bool getVisited();
 		Person *getBiologicalFather();
 		Person *getBiologicalMother();
 		Person *getSpouse();
+		Person *getRoot();
 		int getFatherOrMother();
 		std::string getFullName();
 		FamilyTree *getFamily();
@@ -46,6 +48,7 @@ class Person
 		int fatherOrMother = -1;
 		bool visited = false;
 		std::string fullName = "Unknown";
+		Person* root = NULL;
 		FamilyTree *family;
 		Person *biologicalFather = NULL;
 		Person *biologicalMother = NULL;

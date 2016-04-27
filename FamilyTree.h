@@ -31,6 +31,8 @@ class FamilyTree
 		void setUnknownPerson(Person*);
 		void removeFromRootList(Person*);
 		void printAllRoots();
+		void printAllFamilies();
+		void printPersonsFamily(Person*);
     private:
 		Person *unknownPerson;// = new Person("Unknown");
 		std::vector<Person*> rootList;
