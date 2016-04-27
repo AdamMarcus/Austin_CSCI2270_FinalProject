@@ -14,7 +14,7 @@ using namespace std;
 
 int main()
 {
-	FamilyTree *myFamilyTree = new FamilyTree();
+	FamilyTree *myFamilyTree = new FamilyTree();						// Create an instance of familyTree
 	Person *unknownPerson = new Person("Unknown");
 	unknownPerson -> setVisited(true);
 	myFamilyTree -> setUnknownPerson(unknownPerson);
