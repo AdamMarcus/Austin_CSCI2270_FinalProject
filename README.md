@@ -19,6 +19,7 @@ Adam Austin
 Contributors:
 
 Open issues/bugs:
+When a new Person is made their temporary parent nodes do not add them as a child
 
 ----------------------------------------------------------------------------------------------------------------
 
