@@ -23,6 +23,7 @@ class Person
 		Person(std::string);
 		Person(std::string, FamilyTree*);
 		Person(std::string, std::string, std::string, FamilyTree*);
+		Person(std::string, std::string, std::string, std::string, std::string);
 		~Person();
 		void setBiologicalFather(Person*);
 		void setBiologicalMother(Person*);
@@ -33,9 +34,11 @@ class Person
 		void setFamily(FamilyTree*);
 		void setVisited(bool);
 		void setFatherOrMother(int);
+		void setSpouse(Person*);
 		bool getVisited();
 		Person *getBiologicalFather();
 		Person *getBiologicalMother();
+		Person *getSpouse();
 		int getFatherOrMother();
 		std::string getFullName();
 		FamilyTree *getFamily();
@@ -46,6 +49,7 @@ class Person
 		FamilyTree *family;
 		Person *biologicalFather = NULL;
 		Person *biologicalMother = NULL;
+		Person *spouse = NULL;
 };
 
 #endif

@@ -24,6 +24,7 @@ int main()
 		cout << "======Main Menu======" << endl;
 		cout << "1. Add a Person" << endl;
 		cout << "2. Print Persons Information" << endl;
+		cout << "3. Print all Roots" << endl;
 		cout << "5. Quit" << endl;
 		string userChoiceString;
 		cin >> userChoiceString;
@@ -35,14 +36,31 @@ int main()
 			cin.ignore();
 			string name;
 			getline(cin, name);
-			cout << "What is your biological mothers full name, \"First Last\"? If you do not know put \"Unknown\"" << endl;
+			cout << "What is " << name << "'s biological mothers full name, \"First Last\"? If you do not know put \"Unknown\"." << endl;
 			string mothersName;
 			getline(cin, mothersName);
-			cout << "What is your biological fathers full name, \"First Last\"? If you do not know put \"Unknown\"" << endl;
+			cout << "What is " << name << "'s biological fathers full name, \"First Last\"? If you do not know put \"Unknown\"." << endl;
 			string fathersName;
 			getline(cin, fathersName);
-			Person *newPerson = new Person(name, mothersName, fathersName, myFamilyTree);
-			cout << "Does " << newPerson -> getFullName() << " have any siblings?"; 
+			cout << "Does " << name << " have a spouse? If so, enter their full name, \"First Last\", if not enter \"None\", and if you do not know, enter \"Unknown\"." << endl;
+			string spouse;
+			getline(cin, spouse);
+			cout << "Is " << name << " a male or female? For male enter \"m\" and for female enter \"f\"." << endl;
+			string gender = "";
+			bool doneWithGender = false;
+			while (!doneWithGender)
+			{
+				getline(cin, gender);
+				if (gender == "m" || gender == "f")
+				{
+					//cout << endl;
+					doneWithGender = true;
+				}
+				else
+					cout << "This is not a recognized input, please try again:";
+			}
+			Person *newPerson = new Person(name, mothersName, fathersName, spouse, gender);
+			cout << "Does " << newPerson -> getFullName() << " have any siblings? "; 
 			bool doneWithSiblings = false;
 			while (!doneWithSiblings)
 			{
@@ -70,14 +88,14 @@ int main()
 					}
 					else
 						cout << userInput << " has not been added as a sibling" << endl;
-					cout << "Does " << newPerson -> getFullName() << " have any more siblings?";
+					cout << "Does " << newPerson -> getFullName() << " have any more siblings? ";
 				}
 			}
 			cout << "Does " << newPerson -> getFullName() << " have any children?"; 
 			bool doneWithChildren = false;
 			while (!doneWithChildren)
 			{
-				cout << "If not enter \"No\", otherwise enter their full name, \"First Last\": ";
+				cout << " If not enter \"No\", otherwise enter their full name, \"First Last\": ";
 				//cin.ignore();
 				string userInput;
 				getline(cin, userInput);
@@ -116,25 +134,12 @@ int main()
 			Person *person = myFamilyTree -> findPerson(name);
 			if (person != NULL)
 			{
-				cout << "=====================" << endl;
-				cout << "Name: " << person -> getFullName() << endl;
-				if (person -> getBiologicalMother() != NULL)
-					cout << "Mother: " << person -> getBiologicalMother() -> getFullName() << endl;
-				if (person -> getBiologicalFather() != NULL)
-					cout << "Father: " << person -> getBiologicalFather() -> getFullName() << endl;
-				cout << "Siblings";
-				for (int i = 0; i < person -> sibList.size(); i++)
-				{
-					cout << ", " << person -> sibList[i] -> getFullName();
-				}
-				cout << endl;
-				cout << "Children";
-				for (int i = 0; i < person -> childList.size(); i++)
-				{
-					cout << ", " << person -> childList[i] -> getFullName();
-				}
-				cout << endl;
+				person -> printInformation();
 			}
+		}
+		else if (userChoiceString == "3")
+		{
+			myFamilyTree -> printAllRoots();
 		}
 		else if (userChoiceString == "5")
 		{

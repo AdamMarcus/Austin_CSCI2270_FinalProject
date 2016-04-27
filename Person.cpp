@@ -33,6 +33,19 @@ Person::Person(string _fullName, string _mothersName, string _fathersName, Famil
 	biologicalFather = new Person(_fathersName, _family);
 }
 
+Person::Person(string _fullName, string _mothersName, string _fathersName, string _spouseName, string _gender)
+{
+	fullName = _fullName;
+	biologicalMother = new Person(_mothersName);
+	biologicalFather = new Person(_fathersName);
+	if (_spouseName != "None")
+		spouse = new Person(_spouseName);
+	if (_gender == "m")
+		fatherOrMother = 0;
+	else
+		fatherOrMother = 1;
+}
+
 Person::~Person()
 {
 	
@@ -66,6 +79,10 @@ void Person::printInformation()
 		cout << "Mother: " << biologicalMother -> getFullName() << endl;
 	if (biologicalFather != NULL)
 		cout << "Father: " << biologicalFather -> getFullName() << endl;
+	if (spouse != NULL)
+		cout << "Spouse: " << spouse -> getFullName() << endl;
+	else
+		cout << "Spouse: None" << endl;
 	cout << "Siblings";
 	for (int i = 0; i < sibList.size(); i++)
 	{
@@ -95,6 +112,11 @@ void Person::setFatherOrMother(int _fatherOrMother)
 	fatherOrMother = _fatherOrMother;
 }
 
+void Person::setSpouse(Person *_person)
+{
+	spouse = _person;
+}
+
 Person *Person::getBiologicalFather()
 {
 	return biologicalFather;
@@ -103,6 +125,11 @@ Person *Person::getBiologicalFather()
 Person *Person::getBiologicalMother()
 {
 	return biologicalMother;
+}
+
+Person *Person::getSpouse()
+{
+	return spouse;
 }
 
 string Person::getFullName()

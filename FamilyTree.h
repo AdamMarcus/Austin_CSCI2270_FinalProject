@@ -21,6 +21,7 @@ class FamilyTree
 		Person* findPerson(std::string);
 		bool searchForExistingMother(Person*);
 		bool searchForExistingFather(Person*);
+		bool searchForSpouse(Person*);
 		bool searchForExistingSiblings(Person*);
 		bool searchForExistingChildren(Person*);
 		int getRootListSize();
@@ -29,6 +30,7 @@ class FamilyTree
 		void resetVisited();
 		void setUnknownPerson(Person*);
 		void removeFromRootList(Person*);
+		void printAllRoots();
     private:
 		Person *unknownPerson;// = new Person("Unknown");
 		std::vector<Person*> rootList;
