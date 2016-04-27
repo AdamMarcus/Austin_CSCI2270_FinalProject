@@ -19,7 +19,8 @@ FamilyTree::FamilyTree()
 
 FamilyTree::~FamilyTree()
 {
-	
+	for (int i = 0; i < personList.size(); i++)
+		delete personList[i];
 }
 
 Person* FamilyTree::findPerson(string _name)
